@@ -1,6 +1,6 @@
 import { IsNotEmpty, IsNumber } from 'class-validator';
 
-export class ProductDTO {
+export class ProductDto {
   @IsNotEmpty()
   name: string;
 
@@ -8,7 +8,7 @@ export class ProductDTO {
   price: number;
 }
 
-export class ProductRO {
+export class ProductRo {
   _id: string;
   name: string;
   price: number;

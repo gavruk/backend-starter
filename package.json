@@ -1,6 +1,6 @@
 {
-  "name": "nest-typescript-starter",
-  "private": true,
+  "name": "backend-starter",
+  "private": false,
   "version": "1.0.0",
   "description": "Nest TypeScript starter repository",
   "license": "MIT",

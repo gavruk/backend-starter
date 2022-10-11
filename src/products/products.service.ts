@@ -38,4 +38,20 @@ export class ProductsService {
       userId,
     });
   }
+
+  async update(
+    id: string,
+    data: Partial<Product>,
+    userId: string,
+  ): Promise<void> {
+    await this.productModel.update(
+      {
+        _id: id,
+        userId,
+      },
+      {
+        $set: data,
+      },
+    );
+  }
 }

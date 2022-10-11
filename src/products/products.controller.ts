@@ -3,6 +3,7 @@ import {
   UseGuards,
   Get,
   Post,
+  Put,
   Delete,
   Request,
   Body,
@@ -19,8 +20,18 @@ export class ProductsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Request() req, @Body() data: interfaces.ProductDTO) {
+  async create(@Request() req, @Body() data: interfaces.ProductDto) {
     return this.productsService.create(data, req.user.userId);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Put(':id')
+  async update(
+    @Request() req,
+    @Body() data: interfaces.ProductDto,
+    @Param('id') id: string,
+  ) {
+    await this.productsService.update(id, data, req.user.userId);
   }
 
   @UseGuards(JwtAuthGuard)
