@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty } from 'class-validator';
+import { Min, IsEmail, IsNotEmpty } from 'class-validator';
 
 export class Session {
   userId: string;
@@ -13,6 +13,7 @@ export class SignupDto {
   @IsEmail()
   email: string;
   @IsNotEmpty()
+  @Min(8)
   password: string;
 }
 

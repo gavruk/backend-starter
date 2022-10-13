@@ -20,29 +20,44 @@ export class ProductsController {
 
   @UseGuards(JwtAuthGuard)
   @Post()
-  async create(@Request() req, @Body() data: interfaces.ProductDto) {
-    return this.productsService.create(data, req.user.userId);
+  async create(@Request() req, @Body() data: interfaces.CreateProductDto) {
+    const product = await this.productsService.create(data, req.user.userId);
+    return {
+      success: true,
+      _id: product._id,
+    };
   }
 
   @UseGuards(JwtAuthGuard)
   @Put(':id')
   async update(
     @Request() req,
-    @Body() data: interfaces.ProductDto,
+    @Body() data: interfaces.UpdateProductDto,
     @Param('id') id: string,
   ) {
     await this.productsService.update(id, data, req.user.userId);
+    return {
+      success: true,
+    };
   }
 
   @UseGuards(JwtAuthGuard)
   @Delete(':id')
   async delete(@Request() req, @Param('id') id: string) {
-    await this.productsService.remove({ _id: id, userId: req.user.userId });
+    await this.productsService.removeProduct({
+      _id: id,
+      userId: req.user.userId,
+    });
+    return {
+      success: true,
+    };
   }
 
   @UseGuards(JwtAuthGuard)
   @Get()
   async list(@Request() req) {
-    return this.productsService.list({ userId: req.user.userId });
+    return this.productsService.listProducts({
+      userId: req.user.userId,
+    });
   }
 }

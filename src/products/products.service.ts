@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
+import * as interfaces from './products.interfaces';
 import { Product, ProductDocument } from './schemas/product.schema';
 
 @Injectable()
@@ -14,11 +15,16 @@ export class ProductsService {
     return this.productModel.findOne(query);
   }
 
-  async list(query: object): Promise<ProductDocument[]> {
-    return this.productModel.find(query);
+  async listProducts(query: object): Promise<interfaces.ProductRo[]> {
+    const docs = await this.productModel.find(query);
+    return docs.map((d) => ({
+      _id: d._id.toString(),
+      name: d.name,
+      price: d.price,
+    }));
   }
 
-  async remove({
+  async removeProduct({
     _id,
     userId,
   }: {
